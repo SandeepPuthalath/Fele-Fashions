@@ -18,7 +18,7 @@ function productController() {
         res.status(httpStatus.OK).json({totalProducts: products.length, products})
     })
 
-    const handleAddCategory = expressAsyncHandler(async (req, res, next) => {
+    const handleAddCategory = expressAsyncHandler(async (req, res) => {
         const { categoryId, categoryName } = req.body
         const isCategoryExists = await Category.findOne({ categoryId, categoryName });
         if (isCategoryExists) {

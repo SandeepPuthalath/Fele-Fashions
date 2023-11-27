@@ -6,7 +6,6 @@ const errorHandler = (err, req, res, next) => {
     if (err.statusCode === 404) {
         res.status(err.statusCode).json({ errors: err.status, errorMessage: err.message })
     } else {
-        console.log(res)
         res.status(err.statusCode).json({
             status: err.status,
             message: err.message
