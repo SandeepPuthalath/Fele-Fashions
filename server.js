@@ -7,6 +7,7 @@ const errorHandler = require("./utils/middlewares/errorHandler");
 const AppError = require("./utils/error/AppError");
 const httpStatus = require("./config/httpStatus");
 const routes = require("./routes");
+const connectToDB = require("./database/connection");
 
 // Created express instance
 const app = express();
@@ -22,6 +23,9 @@ app.use(morgan("dev"));
 
 // Global error handler
 app.use(errorHandler)
+
+// AWS Dynamoose setup
+connectToDB();
 
 // Api routes
 routes(app)

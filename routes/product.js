@@ -6,7 +6,11 @@ function productRoutes() {
     const router = express.Router();
     const controller = productController();
 
-    router.route("/categories").get(controller.handleGettingCategories)
+    router.route("/list").get(controller.handleGetProductsList);
+
+    router.route("/categories").get(controller.handleGetCategories).post(controller.handleAddCategory);
+
+    router.route("/save").post(controller.handleAddProduct)
 
     return router;
 }
