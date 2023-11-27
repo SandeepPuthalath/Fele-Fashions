@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 
 const schema = new mongoose.Schema({
-    productId: {
-        type: Number
-    },
     productName: {
         type: String,
     },
@@ -18,7 +15,7 @@ const schema = new mongoose.Schema({
         type: String
     },
     categoryId: {
-        type: Number,
+        type: String,
     }
 },
 {

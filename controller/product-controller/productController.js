@@ -14,19 +14,19 @@ function productController() {
 
     const handleGetProductsList = expressAsyncHandler(async(req, res) => {
         const query = req.query;
+        const category = await Category.findById(query.categoryId);
         const products = await Product.find(query);
-        res.status(httpStatus.OK).json({totalProducts: products.length, products})
+        res.status(httpStatus.OK).json({categoryId: category._id, categoryName: category.categoryName, products})
     })
 
-    const handleAddCategory = expressAsyncHandler(async (req, res) => {
-        const { categoryId, categoryName } = req.body
-        const isCategoryExists = await Category.findOne({ categoryId, categoryName });
+    const handleAddCategory = expressAsyncHandler(async (req, res, next) => {
+        const { categoryName } = req.body
+        const isCategoryExists = await Category.findOne({categoryName });
         if (isCategoryExists) {
             const err = new AppError("Category already exists", httpStatus.CONFLICT)
-           throw err
+           return next(err) 
         }
         const category = new Category({
-            categoryId,
             categoryName,
         });
         category.save();
