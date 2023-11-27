@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const helmet = require("helmet");
+const cors = require("cors")
 const morgan = require("morgan");
 const config = require("./config/config");
 const errorHandler = require("./utils/middlewares/errorHandler");
@@ -13,30 +14,36 @@ const connectToDB = require("./database/connection");
 const app = express();
 
 // Server instance has been created
-const server = http.createServer(app);
 
 // Using Global middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(helmet());
+app.use(express.urlencoded({extended:true}))
+app.use(cors())
 app.use(morgan("dev"));
+app.use(helmet());
 
-// Global error handler
-app.use(errorHandler)
 
-// AWS Dynamoose setup
+
+// Connecting to database
 connectToDB();
+
 
 // Api routes
 routes(app)
+
 
 app.all("*", (req, res, next) => {
     const err = new AppError(`Can't find ${req.originalUrl} on the server`, httpStatus.NOT_FOUND);
     next(err)
 })
 
+// Global error handler
+app.use(errorHandler)
+
+
 // Server is listening ...
 const PORT = config.PORT;
+const server = http.createServer(app)
 
 server.listen(PORT, () => {
     console.log(`Server is started at PORT: ${PORT}`);

@@ -23,7 +23,7 @@ function productController() {
         const isCategoryExists = await Category.findOne({ categoryId, categoryName });
         if (isCategoryExists) {
             const err = new AppError("Category already exists", httpStatus.CONFLICT)
-            return next(err);
+           throw err
         }
         const category = new Category({
             categoryId,
