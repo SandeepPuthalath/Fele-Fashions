@@ -31,14 +31,13 @@ connectToDB();
 // Api routes
 routes(app)
 
+app.get("/", (req, res) => {
+    res.status(200).json({ status: "success", message: "This is a sample api for Fele Fashion" })
+})
 
 app.all("*", (req, res, next) => {
     const err = new AppError(`Can't find ${req.originalUrl} on the server`, httpStatus.NOT_FOUND);
     next(err)
-})
-
-app.get("/", (req, res) =>{
-    res.status(200).json({status: "success", message: "This is a sample api for Fele Fashion"})
 })
 
 // Global error handler
