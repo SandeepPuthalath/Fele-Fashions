@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 
 const schema = new mongoose.Schema({
+    productId: {
+        type: String,
+        require: true
+    },
     productName: {
         type: String,
     },
